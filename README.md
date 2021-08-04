@@ -12,7 +12,7 @@ To run the server and be able to play you must follow these steps
 
 ---
 ## You can play the game online at this url
-[Minesweeper online](https://h19od7uori.execute-api.us-east-1.amazonaws.com/dev/)
+### Enjoy [Minesweeper online](https://h19od7uori.execute-api.us-east-1.amazonaws.com/dev/)
 
 ----
 ## How to play?
@@ -36,6 +36,19 @@ The game ends and the player is deemed won when all cells were discovered and no
 | GET    | /           | Get html file |        |
 | GET    | /styles.css | Get css file  |        |
 | GET    | /minesweeper.js | Get js file  |        |
+
+---
+## Technologies used
+
+- Express to up the server
+- Dotenv for environment variables
+- Nodemon to refresh the server in local
+- Serverless-http to deploy to AWS lambda
+- CSS to style
+- Bootstrap components
+- Fontawesome icons
+
+---
 ## Project structure
 
 ```sh
