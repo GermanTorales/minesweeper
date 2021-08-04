@@ -1,0 +1,18 @@
+# serverless.yml
+
+service: minesweeper
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: dev
+  region: us-east-1
+
+functions:
+  express:
+    handler: src/app.handler
+    events:
+      - http: ANY /
+      - http: "GET /"
+      - http: "GET /{proxy+}"
+      - http: "GET /public"
