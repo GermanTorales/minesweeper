@@ -6,9 +6,7 @@ const routes = require("./routes");
 const app = express();
 
 app.use("/public", express.static(path.join(__dirname, "/browser")));
-
 app.use("/", routes);
-
 app.use((err, req, res, next) => {
   res.status(404).json({
     status: res.statusCode,
