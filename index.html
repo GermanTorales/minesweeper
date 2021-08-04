@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <title>Buscaminas</title>
+  </head>
+  <body oncontextmenu="return false">
+    <div class="container">
+      <div class="row d-flex justify-content-center pt-2">
+        <div class="col-md-2 d-flex justify-content-center">
+          <div class="btn-success text-center new-game" id="new-game" onclick="newGame()">
+            New Game
+          </div>
+        </div>
+        <div class="col-md-1">
+          <span id="mines-display" class="bg-dark"
+            ><i class="fas fa-bomb" id="bomb-icon"></i> 00</span
+          >
+        </div>
+        <div class="col-md-1">
+          <i
+            data-toggle="modal"
+            data-target="#configModal"
+            id="config"
+            class="fas fa-cog"
+            style="font-size: 40px"
+          ></i>
+        </div>
+      </div>
+      <table id="board" cellspacing="0" cellpadding="0"></table>
+      <div class="row d-flex justify-content-center pt-1">
+        <div class="col-md-2 d-flex justify-content-center">
+          <div class="btn-success text-center new-game" id="new-game" onclick="saveBoard()">
+            Save Board
+          </div>
+        </div>
+        <div class="col-md-2 d-flex justify-content-center">
+          <div class="btn-primary text-center new-game" id="new-game" onclick="loadBoard()">
+            Load last Board
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Config Modal -->
+    <div
+      class="modal fade"
+      id="configModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Configuration</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="dificulty">Dificulty (Amount of mines on the board)</label>
+              <input class="form-control" id="dificulty" type="range" min="1" max="40" step="1" />
+
+              <label for="rows">Number of rows and columns</label>
+              <input
+                class="form-control"
+                type="number"
+                placeholder="Rows and columns"
+                id="dimensions"
+                value="10"
+                min="10"
+                max="1000"
+                step="10"
+              />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div type="button" class="btn btn-secondary" data-dismiss="modal">Close</div>
+            <button type="button" class="btn btn-success">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lose Modal -->
+    <div
+      class="modal fade"
+      id="loseModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Game Over</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group lose-modal-text">You lost! <i class="fas fa-sad-cry"></i></div>
+          </div>
+          <div class="modal-footer">
+            <div type="button" class="btn btn-secondary" data-dismiss="modal">Close</div>
+            <button type="button" class="btn btn-success" onclick="newGame()">New Game</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Win Modal -->
+    <div
+      class="modal fade"
+      id="winModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Game Over</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group win-modal-text">You win! <i class="fas fa-smile-beam"></i></div>
+          </div>
+          <div class="modal-footer">
+            <div type="button" class="btn btn-secondary" data-dismiss="modal">Close</div>
+            <button type="button" class="btn btn-success" onclick="newGame()">New Game</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="minesweeper.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
